@@ -1,0 +1,107 @@
+<ivy-module version="1.0">
+  <info organisation="ncicb"
+        module="WashuPrintService" />
+  <configurations>
+    <conf name="default" />
+    <conf name="compile" />
+    
+    <conf name="runtime" /> 
+    
+  </configurations>
+
+  <dependencies>
+                              
+    <dependency org="javax.servlet"
+                name="servlet-api"
+                rev="2.3"
+                conf="compile, runtime->default"/> 
+                
+    <dependency org="poi"
+                name="poi"
+                rev="3.0.2-FINAL-20080204"
+                conf="compile, runtime->default"/>      
+                
+    <dependency org="log4j" 
+                name="log4j" 
+                rev="1.2.8"
+                conf="runtime->master"/> 
+                
+    <dependency org="commons-logging" 
+                name="commons-logging" 
+                rev="1.0.4"
+                conf="runtime->master"/>        
+                
+    <dependency org="org.w3c" 
+                name="dom" 
+                rev="2.3.0-jaxb-1.0.6"
+                conf="runtime->master"/> 
+                
+    <dependency org="javax.mail" 
+                name="mail" 
+                rev="1.4"
+                conf="runtime->master"/>  
+                
+    <dependency org="javax.xml"
+                name="jax-qname"
+                rev="1.1"
+                conf="runtime->master"/>    
+                
+    <dependency org="washuprint"
+                name="relaxngdatatype"
+                rev="1.0"
+                conf="runtime->master"/> 
+                
+    <dependency org="javax.activation"
+                name="activation"
+                rev="1.0"
+                conf="runtime->master"/>   
+                
+    <dependency org="javax.xml"
+                name="saaj-api"
+                rev="1.2"
+                conf="runtime->master"/>
+                
+    <dependency org="washuprint"
+                name="appserv-jstl"
+                rev="1.0"
+                conf="runtime->master"/>     
+                
+    <dependency org="org.jboss"
+                name="jboss-xerces"
+                rev="4.2.2.GA"
+                conf="runtime->master"/>   
+                
+    <dependency org="org.jboss"
+                name="jboss-xalan"
+                rev="4.2.2.GA"
+                conf="runtime->master"/>   
+                
+    <dependency org="msv"
+                name="xsdlib"
+                rev="20051114"
+                conf="runtime->master"/>     
+                
+    <dependency org="javax.xml"
+                name="jaxrpc"
+                rev="1.1"
+                conf="lib->master"/>  
+                
+    <dependency org="washuprint"
+                name="jaxrpc-api"
+                rev="1.1"
+                conf="runtime->master"/>  
+                
+    <dependency org="washuprint"
+                name="jaxrpc-impl"
+                rev="1.0"
+                conf="runtime->master"/>   
+                <!--
+    <dependency org="org.jboss"
+                name="jbossws-native"
+                rev="2.0.1.SP2"
+                conf="otherlib->master"/> 
+
+  -->
+  </dependencies>
+
+</ivy-module>

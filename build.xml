@@ -1,31 +1,9 @@
 <?xml version ="1.0"?>
-
-<!--Ant Script for create Build for caTISSUE Core-->
-<project name="PrintWebService" >
-	<!--<path id="web.classpath">
-	  <fileset dir="./WEB-INF/lib">
-	    <include name="**/*.jar" />
-	  </fileset>
-	   <fileset dir="C:\Java\jdk1.5.0_05\lib">
-	    <include name="tools.jar" />
-	  </fileset>
-	</path>-->
-	
-	<!--<target name="WsCompile">
-		<java classname="com.sun.xml.rpc.tools.wscompile.Main" fork="true">
-					<classpath refid="web.classpath"/>
-					<classpath> 	
-						<pathelement location="./bin"/>
-					</classpath>
-					<arg value="-gen:server"/>
-					<arg value="-f:rpcliteral"/>
-					<arg line="-mapping WEB-INF/mapping.xml"/>
-					<arg value="config.xml"/>
-				</java>
-	</target>-->
-
+<project name="PrintWebService">
+  <import file="ivy-targets.xml"/>
+  
 	<property name="base.dir" value="."/>
-	<property name="jboss.home.dir" value="E:/jboss-4.2.2.GA"/> 
+  <property name="jboss.home.dir" value="E:/jboss-4.2.2.GA"/> 
 	<property name="classes.dir" value="${base.dir}/WEB-INF/classes"/> 
 	<property name="wsdl.dir" value="${base.dir}/WEB-INF/wsdl"/>
 	<property name="src.dir" value="../WEB-INF/src" />
@@ -33,7 +11,7 @@
 	<property name="java.home.dir" value="C:/Program Files/Java/jdk1.5.0_06"/>  
 
 	
-	<target name="copyFiles">
+	<target name="copyFiles" depends="ivy-runtime">
 		<copy file="./output/PrintWebService.wsdl" todir="./WEB-INF/wsdl"/>
 		<copy todir="./WEB-INF/classes">
 		    <fileset dir="./output">
@@ -41,7 +19,12 @@
 		    	 <exclude name="**/*.java"/>		    	
 		    </fileset>
 		  </copy>
-		  
+
+    <copy todir="./WEB-INF/lib">
+      <fileset dir="ivylib/runtime">
+        <include name="*.jar" />
+      </fileset>
+    </copy>
 	</target>
 	<target name="build_war" depends="copyFiles">
 		<war destfile="caTissuePrintWebService.war" webxml="./WEB-INF/web.xml" >
@@ -50,10 +33,8 @@
 			<include name="edu/**" />
 			</fileset>  
 		</war>
-		</target>
-   <!-- <target name="deploy_catissue_print_web_service'" depends="clean_temp_dir_war,WsCompile,copyFiles,build_war">
-				 <copy file="caTissuePrintWebService.war" todir="${jboss.home.dir}/server/default/deploy" />
-	</target>	-->	
+	</target>
+
 	<target name="clean_temp_dir_war" description="delete temp directory used for caCORE unpack">
 			<!-- do delete ${temp.dir} -->
 			<delete file="${jboss.home.dir}/server/default/deploy/caTissuePrintWebService.war" />
@@ -68,23 +49,27 @@
 		 	 <fileset dir="${java.home.dir}/lib" includes="tools.jar" />	            
 		</path>
 	
-	<target name="compile">
+	<target name="compile" depends="ivy-compile">
 		<echo  message="${base.dir}" />
-				<javac destdir="${target.dir}" includes="**/*.*" includeAntRuntime="false" debug="yes" target="1.5">
-					<src path="${base.dir}/src"/>
-					<classpath>
-						<fileset dir="${base.dir}/WEB-INF/lib">
-							<include name="*.jar" />
-						</fileset>
-					</classpath>
-					 <classpath refid="wsprovide.path" />
-					</javac>	
-				<copy todir="${classes.dir}">
-					<fileset dir="${base.dir}">
-						<include name="*.properties" />
-					</fileset>
-				</copy>
-			</target>
+				
+    <javac destdir="${target.dir}" includes="**/*.*" includeAntRuntime="false" debug="yes" target="1.5">
+	  	<src path="${base.dir}/src"/>
+      
+			<classpath>
+	  		<fileset dir="${base.dir}/ivylib/compile">
+	   			<include name="*.jar" />
+		 		</fileset>
+			</classpath>
+		 <classpath refid="wsprovide.path" />
+           
+		</javac>	
+          
+		<copy todir="${classes.dir}">
+			<fileset dir="${base.dir}">
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+	</target>
 
 	<target name="wsprovide" depends="compile" description="wsprovide task for JBoss-4.2.2.GA">
 			  <taskdef name="wsprovide" classname="org.jboss.wsf.spi.tools.ant.WSProvideTask">
