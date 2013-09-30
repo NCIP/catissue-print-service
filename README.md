@@ -9,7 +9,7 @@ Please see the NOTICE and LICENSE files for details.
 
 You will find more details about the caTissue Print Service project in the following links:
  * [caTissue Documentation] (https://wiki.nci.nih.gov/x/uJT9AQ)
- * [Docs Repository] (https://github.com/NCIP/catissue-core)
+ * [Code Repository] (https://github.com/NCIP/catissue-print-service)
  
 Please join us in further developing and improving the caTissue Print Service project.
 
